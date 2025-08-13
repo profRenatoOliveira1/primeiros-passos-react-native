@@ -7,7 +7,7 @@ export default function TabOneScreen() {
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [email, setEmail] = useState('@mail.com');
+  const [email, setEmail] = useState('');
   const [carregando, setCarregando] = useState(false);
 
   return (
@@ -44,7 +44,7 @@ export default function TabOneScreen() {
       />
       <Button
         title='ENVIAR'
-        onPress={() => sendData({
+        onPress={() => alert({
           nome: nome,
           sobrenome: sobrenome,
           cpf: cpf,
