@@ -2,6 +2,8 @@ import { StyleSheet, Button, TextInput, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import { Text, View } from '@/components/Themed';
 
+import PersonRequests from '@/services/api/PersonRequests';
+
 export default function TabOneScreen() {
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
@@ -9,6 +11,34 @@ export default function TabOneScreen() {
   const [telefone, setTelefone] = useState('');
   const [email, setEmail] = useState('');
   const [carregando, setCarregando] = useState(false);
+
+  async function enviarFormulario(
+    person: {
+      nome: string;
+      sobrenome: string;
+      cpf: string;
+      telefone: string;
+      email: string
+    }
+  ) {
+    setCarregando(true); // inicia o spinner
+    try {
+      const respostaPerson = await PersonRequests.postPerson(person);
+
+      if(respostaPerson.ok) {
+        console.log("Pessoa cadastrado com sucesso.");
+        alert("Pessoa cadastrada com sucesso");
+      } else {
+        console.log("Erro ao cadastrar pessoa");
+        alert("Erro ao cadastrar pessoa");
+      }
+    } catch (error) {
+      console.log(`Erro na requisição. ${error}`);
+      alert('Erro inesperado.');
+    } finally {
+      setCarregando(false); // finaliza o spinner
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -44,7 +74,7 @@ export default function TabOneScreen() {
       />
       <Button
         title='ENVIAR'
-        onPress={() => alert({
+        onPress={() => enviarFormulario({
           nome: nome,
           sobrenome: sobrenome,
           cpf: cpf,

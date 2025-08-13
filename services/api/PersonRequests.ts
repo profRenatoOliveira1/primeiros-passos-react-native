@@ -3,7 +3,7 @@ class PersonRequests {
     private endpoint: string;
 
     constructor() {
-        this.apiUri = 'http://localhost:5146';
+        this.apiUri = 'http://10.90.14.85:5000';
         this.endpoint = '/api/people';
     }
 
